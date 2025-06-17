@@ -208,6 +208,21 @@ st.markdown("""
         margin: -1rem -1rem 2rem -1rem;
         border-radius: 0 0 10px 10px;
     }
+    
+    /* Responsive header mobile-first */
+    @media (max-width: 480px) {
+        .main-header {
+            padding: 1rem 0 !important;
+        }
+        .main-header h1 {
+            font-size: 1.4rem !important;
+            margin-bottom: 5px !important;
+        }
+        .main-header p {
+            font-size: 0.85rem !important;
+            padding: 0 10px;
+        }
+    }
     .stButton > button {
         width: 100%;
         background: #4900D6;
@@ -229,8 +244,8 @@ st.markdown("""
 # Header
 st.markdown("""
 <div class="main-header">
-    <h1>💬 WhatsApp Scraper</h1>
-    <p>Estrai SOLO contatti con WhatsApp verificato da qualsiasi sito web</p>
+    <h1 style="font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 10px;">💬 WhatsApp Scraper</h1>
+    <p style="font-size: clamp(0.9rem, 3vw, 1.2rem); opacity: 0.9;">Estrai SOLO contatti con WhatsApp verificato da qualsiasi sito web</p>
 </div>
 """, unsafe_allow_html=True)
 
