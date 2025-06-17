@@ -166,14 +166,40 @@ class WebScraper:
 
 # Configurazione Streamlit
 st.set_page_config(
-    page_title="🕷️ Web Scraper Nome + WhatsApp",
-    page_icon="🕷️",
-    layout="wide"
+    page_title="💬 WhatsApp Scraper",
+    page_icon="💬",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+    menu_items={
+        'Get Help': None,
+        'Report a Bug': None,
+        'About': None
+    }
 )
 
 # CSS personalizzato
 st.markdown("""
 <style>
+    /* Nascondi "Made with Streamlit" */
+    .stDeployButton {
+        display: none;
+    }
+    
+    /* Nascondi menu hamburger */
+    #MainMenu {
+        visibility: hidden;
+    }
+    
+    /* Nascondi footer Streamlit */
+    footer {
+        visibility: hidden;
+    }
+    
+    /* Nascondi header Streamlit */
+    header {
+        visibility: hidden;
+    }
+
     .main-header {
         text-align: center;
         padding: 2rem 0;
@@ -373,6 +399,11 @@ with col2:
         - Numeri WhatsApp pubblicamente visibili
         """)
 
-# Footer
+# Footer personalizzato
 st.markdown("---")
-st.markdown("💬 **WhatsApp Scraper** - Solo contatti con WhatsApp verificato")
+st.markdown("""
+<div style='text-align: center; color: #666; padding: 20px;'>
+    💬 <strong>WhatsApp Scraper</strong> - Powered by ChiocchettiWebSolutions<br>
+    <small>Tool professionale per l'estrazione di contatti WhatsApp</small>
+</div>
+""", unsafe_allow_html=True)
