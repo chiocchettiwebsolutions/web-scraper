@@ -146,16 +146,16 @@ class WebScraper:
                 # AGGIUNGI SOLO SE HA NOME E WHATSAPP
                 if nome and whatsapp:
                     results.append({
-                        'Nome': nome,
-                        'WhatsApp': whatsapp
+                        'first_name': nome,
+                        'phone': whatsapp
                     })
             
             # Rimuovi duplicati basati sul nome
             seen_names = set()
             unique_results = []
             for result in results:
-                if result['Nome'] not in seen_names:
-                    seen_names.add(result['Nome'])
+                if result['first_name'] not in seen_names:
+                    seen_names.add(result['first_name'])
                     unique_results.append(result)
             
             return unique_results
@@ -177,14 +177,14 @@ st.markdown("""
     .main-header {
         text-align: center;
         padding: 2rem 0;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        background: #4900D6;
         color: white;
         margin: -1rem -1rem 2rem -1rem;
         border-radius: 0 0 10px 10px;
     }
     .stButton > button {
         width: 100%;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+        background: #4900D6;
         color: white;
         font-weight: bold;
         border: none;
@@ -286,12 +286,12 @@ with col1:
                 use_container_width=True,
                 hide_index=True,
                 column_config={
-                    "Nome": st.column_config.TextColumn(
+                    "first_name": st.column_config.TextColumn(
                         "Nome",
                         help="Nome dell'attività o persona",
                         max_chars=100,
                     ),
-                    "WhatsApp": st.column_config.TextColumn(
+                    "phone": st.column_config.TextColumn(
                         "WhatsApp",
                         help="Numero WhatsApp confermato",
                     ),
