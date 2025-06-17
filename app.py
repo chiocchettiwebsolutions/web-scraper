@@ -136,14 +136,15 @@ class WebScraper:
             # Trova elementi rilevanti
             relevant_elements = self.find_business_elements(soup)
             
-            # Estrai Nome + WhatsApp
+            # Estrai Nome + WhatsApp (SOLO CON WHATSAPP)
             results = []
             
             for element in relevant_elements:
                 nome = self.extract_name_from_element(element)
                 whatsapp = self.extract_whatsapp_advanced(element)
                 
-                if nome:
+                # AGGIUNGI SOLO SE HA NOME E WHATSAPP
+                if nome and whatsapp:
                     results.append({
                         'Nome': nome,
                         'WhatsApp': whatsapp
@@ -202,8 +203,8 @@ st.markdown("""
 # Header
 st.markdown("""
 <div class="main-header">
-    <h1>🕷️ Web Scraper Nome + WhatsApp</h1>
-    <p>Estrai automaticamente nomi e numeri WhatsApp da qualsiasi sito web</p>
+    <h1>💬 WhatsApp Scraper</h1>
+    <p>Estrai SOLO contatti con WhatsApp verificato da qualsiasi sito web</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -257,25 +258,24 @@ with col1:
         
         # Mostra risultati
         if results:
-            st.success(f"🎉 Trovati {len(results)} risultati!")
+            st.success(f"🎉 Trovati {len(results)} contatti con WhatsApp!")
             
-            # Statistiche
-            with_whatsapp = len([r for r in results if r['WhatsApp']])
+            # Statistiche (tutti hanno WhatsApp per definizione)
+            with_whatsapp = len(results)  # Tutti hanno WhatsApp
             
             col_stat1, col_stat2, col_stat3 = st.columns(3)
             
             with col_stat1:
-                st.metric("📊 Totale risultati", len(results))
+                st.metric("📊 Contatti con WhatsApp", len(results))
             
             with col_stat2:
-                st.metric("💬 Con WhatsApp", with_whatsapp)
+                st.metric("💬 Numeri estratti", with_whatsapp)
             
             with col_stat3:
-                percentage = (with_whatsapp / len(results) * 100) if len(results) > 0 else 0
-                st.metric("📈 % con WhatsApp", f"{percentage:.1f}%")
+                st.metric("📈 Percentuale", "100%")
             
             # Tabella risultati
-            st.header("📋 Risultati trovati")
+            st.header("📋 Contatti con WhatsApp")
             
             # Crea DataFrame per visualizzazione
             df = pd.DataFrame(results)
@@ -293,7 +293,7 @@ with col1:
                     ),
                     "WhatsApp": st.column_config.TextColumn(
                         "WhatsApp",
-                        help="Numero WhatsApp se disponibile",
+                        help="Numero WhatsApp confermato",
                     ),
                 }
             )
@@ -304,44 +304,48 @@ with col1:
             csv_data = csv_buffer.getvalue()
             
             st.download_button(
-                label="📥 Scarica risultati CSV",
+                label="📥 Scarica contatti WhatsApp CSV",
                 data=csv_data,
-                file_name=f"scraping_results_{int(time.time())}.csv",
+                file_name=f"contatti_whatsapp_{int(time.time())}.csv",
                 mime="text/csv",
                 use_container_width=True
             )
             
         else:
-            st.warning("❌ Nessun risultato trovato")
+            st.warning("❌ Nessun contatto WhatsApp trovato")
             st.markdown("""
             **Possibili cause:**
-            - Il sito non contiene informazioni di business
+            - Il sito non contiene numeri WhatsApp pubblici
+            - I numeri WhatsApp sono nascosti o protetti
             - La struttura del sito non è riconosciuta
             - Il sito blocca i bot di scraping
-            - L'URL non è accessibile
             
             **Suggerimenti:**
             - Prova con un URL diverso
-            - Verifica che il sito sia pubblicamente accessibile
-            - Controlla che l'URL sia corretto
+            - Cerca siti con WhatsApp visibili (es: Pagine Gialle)
+            - Verifica che i contatti abbiano WhatsApp pubblico
             """)
 
 with col2:
     st.header("ℹ️ Informazioni")
     
     st.markdown("""
+    **Filtraggio WhatsApp attivo:**
+    - ✅ **Solo contatti con WhatsApp**
+    - ✅ **Numeri verificati e puliti**
+    - ✅ **100% risultati utili**
+    
     **Come funziona:**
     1. Inserisci l'URL della pagina
     2. Il sistema analizza automaticamente il contenuto
-    3. Estrae nomi e numeri WhatsApp
+    3. Estrae **SOLO** nomi con WhatsApp confermato
     4. Scarica i risultati in CSV
     
-    **Siti supportati:**
+    **Siti consigliati:**
     - 📞 Pagine Gialle
     - 🏢 Directory aziendali
     - 📋 Liste di professionisti
-    - 🌐 Siti di annunci
-    - 📊 E molti altri!
+    - 🌐 Siti di annunci con WhatsApp
     
     **Formati WhatsApp riconosciuti:**
     - wa.me/+393331234567
@@ -353,11 +357,11 @@ with col2:
     # Info aggiuntive
     with st.expander("🔧 Dettagli tecnici"):
         st.markdown("""
-        - **Estrazione automatica** di nomi da titoli H1-H4
-        - **Pattern recognition** per numeri WhatsApp
+        - **Filtro WhatsApp attivo** - solo risultati con numero
+        - **Pattern recognition** avanzato per WhatsApp
         - **Pulizia automatica** dei numeri italiani
-        - **Rimozione duplicati** basata sui nomi
-        - **Timeout 15 secondi** per sicurezza
+        - **Validazione rigorosa** dei numeri
+        - **Zero risultati inutili**
         """)
     
     with st.expander("⚠️ Note legali"):
@@ -366,8 +370,9 @@ with col2:
         - Rispetta i termini di servizio
         - Non utilizzare per spam
         - Solo per scopi legittimi
+        - Numeri WhatsApp pubblicamente visibili
         """)
 
 # Footer
 st.markdown("---")
-st.markdown("🕷️ **Web Scraper** - Strumento per l'estrazione di contatti business")
+st.markdown("💬 **WhatsApp Scraper** - Solo contatti con WhatsApp verificato")
